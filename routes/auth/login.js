@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { signAccessToken } = require("../../utils/jwt");
+const { signAccessToken, signRefreshToken } = require("../../utils/jwt");
 
 const mockupDatabase = {
   username: "nathapon",
@@ -22,6 +22,14 @@ router.post("/", async (req, res, next) => {
 
   try {
     const token = await signAccessToken(username);
+    const refreshToken = signRefreshToken(username);
+
+    // store refresh token in httpOnly Cookies
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 60000, // 1 minute
+      httpOnly: false, // in prodution set to true
+    });
+
     res.status(200).json({
       accessToken: token,
     });

@@ -1,16 +1,21 @@
+const { response } = require("express");
 const { verifyAccessToken } = require("../utils/jwt");
 
 module.exports = async function (req, res, next) {
   const bearerToken = req.header("authorization");
   if (!bearerToken) {
-    res.status(401).json("Unauthorized");
+    return res
+      .status(400)
+      .json({ auth_code: 1, message: "ERROR: No token provided!", data: null });
   }
-  const claimtoken = bearerToken.split(" ");
-  if (!claimtoken[1]) {
-    res.status(401).json("Unauthorized");
+  const claimToken = bearerToken.split(" ");
+  if (!claimToken[1]) {
+    return res
+      .status(400)
+      .json({ auth_code: 1, message: "ERROR: No token provided!", data: null });
   }
   try {
-    const verifiedtoken = await verifyAccessToken(claimtoken[1]);
+    await verifyAccessToken(claimToken[1]);
     req.isAuth = true;
     next();
   } catch (err) {

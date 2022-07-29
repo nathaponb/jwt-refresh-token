@@ -12,6 +12,7 @@ var app = express();
 var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(logger("dev"));
@@ -24,6 +25,7 @@ app.use("/", indexRouter);
 app.use("/api/first", require("./routes/api/first"));
 app.use("/api/second", require("./routes/api/second"));
 app.use("/login", require("./routes/auth/login"));
+app.use("/auth/refreshToken", require("./routes/auth/refreshToken"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

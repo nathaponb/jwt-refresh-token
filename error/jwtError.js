@@ -1,0 +1,1 @@
+class JwtError extends Error {}

@@ -1,0 +1,4 @@
+- making a regular request with accessToken
+- request fails with status code 401
+- axios interceptor catches it and makes request to token/refresh. from that response it gets a new access token.
+- retries the original request.
