@@ -20,3 +20,5 @@
   |        |<-(H)----------- Access Token -------------|               |
   +--------+           & Optional Refresh Token        +---------------+
 ```
+
+`Refresh token` is store in hash string and keep its livespan based on cookies config

@@ -4,9 +4,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const privateKey = process.env.JWT_PRIVATE_KEY;
 const refreshTokenPrivateKey = process.env.REFRESH_TOKEN_KEY;
-
-// Securely store it in db.
-var refreshToken;
+const { conn } = require("../config/db");
 
 function signAccessToken(username) {
   return new Promise((resolve, reject) => {
@@ -28,7 +26,6 @@ function signAccessToken(username) {
  * @strToSign : a string typically name of authenticated user
  */
 function signRefreshToken(strToSign) {
-  // return new Promise(function (resolve, reject) {
   const d = new Date().toLocaleString().replace(/[" "]/g, "");
 
   const hash = crypto
@@ -36,11 +33,7 @@ function signRefreshToken(strToSign) {
     .update(`${strToSign}${d}`)
     .digest("hex");
 
-  refreshToken = hash;
-  // fs.writeFileSync(`/tmp/${strToSign}.txt`, hash);
-
   return hash;
-  // });
 }
 
 function verifyAccessToken(token) {
@@ -62,12 +55,24 @@ function verifyAccessToken(token) {
   });
 }
 
-function verifyRefreshToken(token) {
-  if (token === refreshToken) {
-    return true;
-  } else {
-    return false;
-  }
+//* temporarily store in memory, use database in production.
+function verifyRefreshToken(claimToken) {
+  return new Promise((resolve, reject) => {
+    conn(`SELECT * FROM jwts WHERE token = '${claimToken}'`, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      if (!result) {
+        return res.status(403).json({
+          auth_code: 0,
+          data: null,
+          message: "invalid_grant! invalid refresh",
+        });
+      }
+    });
+    if (!dbToken) {
+    }
+  });
 }
 
 module.exports = {
