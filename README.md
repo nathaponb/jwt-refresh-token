@@ -1,24 +1,11 @@
-```
-  +--------+                                           +---------------+
-  |        |--(A)------- Authorization Grant --------->|               |
-  |        |                                           |               |
-  |        |<-(B)----------- Access Token -------------|               |
-  |        |               & Refresh Token             |               |
-  |        |                                           |               |
-  |        |                            +----------+   |               |
-  |        |--(C)---- Access Token ---->|          |   |               |
-  |        |                            |          |   |               |
-  |        |<-(D)- Protected Resource --| Resource |   | Authorization |
-  | Client |                            |  Server  |   |     Server    |
-  |        |--(E)---- Access Token ---->|          |   |               |
-  |        |                            |          |   |               |
-  |        |<-(F)- Invalid Token Error -|          |   |               |
-  |        |                            +----------+   |               |
-  |        |                                           |               |
-  |        |--(G)----------- Refresh Token ----------->|               |
-  |        |                                           |               |
-  |        |<-(H)----------- Access Token -------------|               |
-  +--------+           & Optional Refresh Token        +---------------+
-```
+![concept](public/concept.png "Jwt implementation visualize figure")
 
-`Refresh token` is store in hash string and keep its livespan based on cookies config
+### [Set up instruction](https://gist.github.com/hellonathapon/710f3789ef64da88f9e3e2b3db6f3646)
+
+### Project Stacks
+* mySQL
+* Express.js
+* JWT
+* React.js
+
+This project demonstates the complete work flow of Full-stack web developement which has JWT. implementing on top of its Authentication.

@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
     const refreshToken = signRefreshToken(username);
 
     //* store refresh token in DB
-    await conn(`INSERT INTO testjwts(token) VALUES ('${refreshToken}')`);
+    await conn(`INSERT INTO jwt(token) VALUES ('${refreshToken}')`);
 
     //* set refresh token in client Cookie
     res.cookie("refreshToken", refreshToken, {

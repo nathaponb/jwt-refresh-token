@@ -13,6 +13,7 @@ const { conn } = require("../../config/db");
  *    ---> generate new access token
  +*/
 
+
 router.get("/", async (req, res, next) => {
   const { refreshToken } = req.cookies;
 
@@ -31,7 +32,7 @@ router.get("/", async (req, res, next) => {
   try {
     //* check if the claim token exist in DB
     const dbToken = await conn(
-      `SELECT * FROM testjwts WHERE token = '${refreshToken}'`
+      `SELECT * FROM jwt WHERE token = '${refreshToken}'`
     );
 
     if (!dbToken.length) {
@@ -44,7 +45,7 @@ router.get("/", async (req, res, next) => {
 
     //* check if claim token still valid
     const isValidToken = await conn(
-      `select * from testjwts where token = '${refreshToken}' and now() < valid_until`
+      `select * from jwt where token = '${refreshToken}' and now() < valid_until`
     );
 
     //* if not remove it
